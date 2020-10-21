@@ -18,19 +18,16 @@ const (
 
 // Processor holds all business logic.
 type Processor struct {
-	db            *database.Database
 	depositGetter DepositGetter
 	depositPutter DepositPutter
 }
 
 // New creates a new instance of Processor.
 func New(
-	db *database.Database,
 	depositGetter DepositGetter,
 	depositPutter DepositPutter,
 ) *Processor {
 	return &Processor{
-		db,
 		depositGetter,
 		depositPutter,
 	}

@@ -85,8 +85,6 @@ func Test_DepositGetter_OneDay_Success(t *testing.T) {
 	// Assert
 	require.NotEmpty(t, res)
 	require.Equal(t, len(res), 2)
-	require.Equal(t, "1", res[0].ID)
-	require.Equal(t, "2", res[1].ID)
 }
 
 func Test_DepositGetter_OneWeek_Success(t *testing.T) {

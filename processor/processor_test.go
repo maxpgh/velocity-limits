@@ -10,12 +10,11 @@ import (
 
 func Test_New(t *testing.T) {
 	// Arrange
-	db := database.New()
 	getter := mockDepositGetter{}
 	putter := mockDepositPutter{}
 
 	// Act
-	p := New(db, &getter, &putter)
+	p := New(&getter, &putter)
 
 	// Assert
 	require.NotNil(t, p)
@@ -23,10 +22,9 @@ func Test_New(t *testing.T) {
 
 func Test_Process_InvalidInput_Error(t *testing.T) {
 	// Arrange
-	db := database.New()
 	getter := mockDepositGetter{}
 	putter := mockDepositPutter{}
-	p := New(db, &getter, &putter)
+	p := New(&getter, &putter)
 
 	// Act
 	res, err := p.Process([]byte("x"))
@@ -39,12 +37,11 @@ func Test_Process_InvalidInput_Error(t *testing.T) {
 
 func Test_Process_DepositExists(t *testing.T) {
 	// Arrange
-	db := database.New()
 	getter := mockDepositGetter{
 		ResExists: true,
 	}
 	putter := mockDepositPutter{}
-	p := New(db, &getter, &putter)
+	p := New(&getter, &putter)
 
 	// Act
 	res, err := p.Process([]byte("{\"id\":\"15887\",\"customer_id\":\"528\",\"load_amount\":\"$3318.47\",\"time\":\"2000-01-01T00:00:00Z\"}"))
@@ -56,7 +53,6 @@ func Test_Process_DepositExists(t *testing.T) {
 
 func Test_Process_DepositMoreThan3TimesIn1Day_Denied(t *testing.T) {
 	// Arrange
-	db := database.New()
 	getter := mockDepositGetter{
 		Res1Day: []*database.Deposit{
 			{
@@ -77,7 +73,7 @@ func Test_Process_DepositMoreThan3TimesIn1Day_Denied(t *testing.T) {
 		},
 	}
 	putter := mockDepositPutter{}
-	p := New(db, &getter, &putter)
+	p := New(&getter, &putter)
 
 	// Act
 	res, err := p.Process([]byte("{\"id\":\"15887\",\"customer_id\":\"528\",\"load_amount\":\"$3318.47\",\"time\":\"2000-01-01T00:00:00Z\"}"))
@@ -90,10 +86,9 @@ func Test_Process_DepositMoreThan3TimesIn1Day_Denied(t *testing.T) {
 
 func Test_Process_InvalidInputAmount_Error(t *testing.T) {
 	// Arrange
-	db := database.New()
 	getter := mockDepositGetter{}
 	putter := mockDepositPutter{}
-	p := New(db, &getter, &putter)
+	p := New(&getter, &putter)
 
 	// Act
 	res, err := p.Process([]byte("{\"id\":\"15887\",\"customer_id\":\"528\",\"load_amount\":\"abc\",\"time\":\"2000-01-01T00:00:00Z\"}"))
@@ -106,7 +101,6 @@ func Test_Process_InvalidInputAmount_Error(t *testing.T) {
 
 func Test_Process_DepositMoreThanLimitPer1Day_Denied(t *testing.T) {
 	// Arrange
-	db := database.New()
 	getter := mockDepositGetter{
 		Res1Day: []*database.Deposit{
 			{
@@ -117,7 +111,7 @@ func Test_Process_DepositMoreThanLimitPer1Day_Denied(t *testing.T) {
 		},
 	}
 	putter := mockDepositPutter{}
-	p := New(db, &getter, &putter)
+	p := New(&getter, &putter)
 
 	// Act
 	res, err := p.Process([]byte("{\"id\":\"15887\",\"customer_id\":\"528\",\"load_amount\":\"$3318.47\",\"time\":\"2000-01-01T00:00:00Z\"}"))
@@ -132,7 +126,6 @@ func Test_Process_DepositMoreThanLimitPer1Day_Denied(t *testing.T) {
 
 func Test_Process_DepositMoreThanLimitPer1Week_Denied(t *testing.T) {
 	// Arrange
-	db := database.New()
 	getter := mockDepositGetter{
 		Res1Week: []*database.Deposit{
 			{
@@ -148,7 +141,7 @@ func Test_Process_DepositMoreThanLimitPer1Week_Denied(t *testing.T) {
 		},
 	}
 	putter := mockDepositPutter{}
-	p := New(db, &getter, &putter)
+	p := New(&getter, &putter)
 
 	// Act
 	res, err := p.Process([]byte("{\"id\":\"15887\",\"customer_id\":\"528\",\"load_amount\":\"$3318.47\",\"time\":\"2000-01-06T00:00:00Z\"}"))
@@ -161,10 +154,9 @@ func Test_Process_DepositMoreThanLimitPer1Week_Denied(t *testing.T) {
 
 func Test_Process_Success(t *testing.T) {
 	// Arrange
-	db := database.New()
 	getter := mockDepositGetter{}
 	putter := mockDepositPutter{}
-	p := New(db, &getter, &putter)
+	p := New(&getter, &putter)
 
 	// Act
 	res, err := p.Process([]byte("{\"id\":\"15887\",\"customer_id\":\"528\",\"load_amount\":\"$3318.47\",\"time\":\"2000-01-06T00:00:00Z\"}"))

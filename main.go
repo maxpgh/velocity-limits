@@ -17,7 +17,6 @@ func main() {
 	depositsPutter := deposits.NewDepositPutter(db)
 
 	processor := processor.New(
-		db,
 		depositGetter,
 		depositsPutter,
 	)
