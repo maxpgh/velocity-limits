@@ -20,7 +20,7 @@ const (
 type Processor struct {
 	db            *database.Database
 	depositGetter DepositGetter
-	DepositPutter DepositPutter
+	depositPutter DepositPutter
 }
 
 // New creates a new instance of Processor.
@@ -95,7 +95,7 @@ func (p *Processor) Process(input []byte) ([]byte, error) {
 
 	if len(deps) == limitTimes {
 		incomingDep.Accepted = false
-		p.DepositPutter.Put(inp.CustomerID, incomingDep)
+		p.depositPutter.Put(inp.CustomerID, incomingDep)
 
 		out := Output{
 			ID:         inp.ID,
@@ -114,7 +114,7 @@ func (p *Processor) Process(input []byte) ([]byte, error) {
 	// check if a user deposited more than a threshold per day
 	if (p.calculateAmount(deps) + amount) >= limitDay {
 		incomingDep.Accepted = false
-		p.DepositPutter.Put(inp.CustomerID, incomingDep)
+		p.depositPutter.Put(inp.CustomerID, incomingDep)
 
 		out := Output{
 			ID:         inp.ID,
@@ -135,7 +135,7 @@ func (p *Processor) Process(input []byte) ([]byte, error) {
 
 	if (p.calculateAmount(deps) + amount) >= limitWeek {
 		incomingDep.Accepted = false
-		p.DepositPutter.Put(inp.CustomerID, incomingDep)
+		p.depositPutter.Put(inp.CustomerID, incomingDep)
 
 		out := Output{
 			ID:         inp.ID,
@@ -153,7 +153,7 @@ func (p *Processor) Process(input []byte) ([]byte, error) {
 
 	// accepting the incoming deposit
 	incomingDep.Accepted = true
-	p.DepositPutter.Put(inp.CustomerID, incomingDep)
+	p.depositPutter.Put(inp.CustomerID, incomingDep)
 
 	out := Output{
 		ID:         inp.ID,
