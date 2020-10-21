@@ -63,6 +63,7 @@ type DepositPutter interface {
 	Put(customer_id string, deposit database.Deposit)
 }
 
+// Process determines if an incoming deposit should be accepted and returns a JSON string.
 func (p *Processor) Process(input []byte) ([]byte, error) {
 	// parse the payload
 	var inp Input
