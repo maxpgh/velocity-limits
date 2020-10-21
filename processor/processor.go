@@ -108,7 +108,7 @@ func (p *Processor) Process(input []byte) ([]byte, error) {
 		return res, nil
 	}
 
-	// check if a user deposited more then a threshold per day
+	// check if a user deposited more than a threshold per day
 	if (p.calculateAmount(deps) + amount) >= limitDay {
 		incomingDep.Accepted = false
 		p.DepositPutter.Put(inp.CustomerID, incomingDep)
@@ -127,7 +127,7 @@ func (p *Processor) Process(input []byte) ([]byte, error) {
 		return res, nil
 	}
 
-	// check if a user deposited more then a threshold per week
+	// check if a user deposited more than a threshold per week
 	deps = p.depositGetter.OneWeek(inp.CustomerID, inp.Time)
 
 	if (p.calculateAmount(deps) + amount) >= limitWeek {
