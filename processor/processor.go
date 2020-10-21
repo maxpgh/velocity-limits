@@ -73,6 +73,8 @@ func (p *Processor) Process(input []byte) ([]byte, error) {
 		return nil, errors.Wrap(err, "limits: Processor.Process json.Unmarshal error")
 	}
 
+	// if there is a deposit with the same id, it means this is a duplicate,
+	// skipping according to requirements
 	if p.depositGetter.Exists(inp.CustomerID, inp.ID) {
 		return nil, nil
 	}

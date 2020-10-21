@@ -13,12 +13,12 @@ import (
 func main() {
 	// init
 	db := database.New()
-	DepositGetter := deposits.NewDepositGetter(db)
+	depositGetter := deposits.NewDepositGetter(db)
 	depositsPutter := deposits.NewDepositPutter(db)
 
 	processor := processor.New(
 		db,
-		DepositGetter,
+		depositGetter,
 		depositsPutter,
 	)
 
@@ -43,6 +43,7 @@ func main() {
 			log.Fatal(err)
 		}
 
+		// skip if there is no result (in case of input that was seen before)
 		if res == nil {
 			continue
 		}
