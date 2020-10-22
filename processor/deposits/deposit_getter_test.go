@@ -41,7 +41,7 @@ func Test_DepositGetter_Exists(t *testing.T) {
 					"2": {
 						ID:     "2",
 						Amount: 1000,
-						Time:   time.Date(2000, 0, 0, 0, 0, 0, 0, time.Now().UTC().Location()),
+						Time:   time.Date(2000, 0, 0, 0, 0, 0, 0, time.UTC),
 					},
 				},
 			},
@@ -65,13 +65,13 @@ func Test_DepositGetter_OneDay_Success(t *testing.T) {
 			"1": {
 				ID:       "1",
 				Amount:   100,
-				Time:     time.Date(2000, 1, 1, 0, 0, 0, 0, time.Now().UTC().Location()),
+				Time:     time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC),
 				Accepted: true,
 			},
 			"2": {
 				ID:       "2",
 				Amount:   100,
-				Time:     time.Date(2000, 1, 1, 11, 15, 2, 0, time.Now().UTC().Location()),
+				Time:     time.Date(2000, 1, 1, 11, 15, 2, 0, time.UTC),
 				Accepted: true,
 			},
 		},
@@ -80,7 +80,7 @@ func Test_DepositGetter_OneDay_Success(t *testing.T) {
 	g := NewDepositGetter(db)
 
 	// Act
-	res := g.OneDay("1", time.Date(2000, 1, 1, 11, 15, 2, 0, time.Now().UTC().Location()))
+	res := g.OneDay("1", time.Date(2000, 1, 1, 11, 15, 2, 0, time.UTC))
 
 	// Assert
 	require.NotEmpty(t, res)
@@ -97,19 +97,19 @@ func Test_DepositGetter_OneWeek_Success(t *testing.T) {
 			"1": {
 				ID:       "1",
 				Amount:   100,
-				Time:     time.Date(2000, 1, 1, 0, 0, 0, 0, time.Now().UTC().Location()),
+				Time:     time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC),
 				Accepted: true,
 			},
 			"2": {
 				ID:       "2",
 				Amount:   100,
-				Time:     time.Date(2000, 1, 1, 11, 15, 2, 0, time.Now().UTC().Location()),
+				Time:     time.Date(2000, 1, 1, 11, 15, 2, 0, time.UTC),
 				Accepted: true,
 			},
 			"3": {
 				ID:       "3",
 				Amount:   100,
-				Time:     time.Date(2000, 1, 2, 19, 58, 46, 0, time.Now().UTC().Location()),
+				Time:     time.Date(2000, 1, 2, 19, 58, 46, 0, time.UTC),
 				Accepted: true,
 			},
 		},
@@ -118,7 +118,7 @@ func Test_DepositGetter_OneWeek_Success(t *testing.T) {
 	g := NewDepositGetter(db)
 
 	// Act
-	res := g.OneWeek("1", time.Date(2000, 1, 2, 19, 58, 46, 0, time.Now().UTC().Location()))
+	res := g.OneWeek("1", time.Date(2000, 1, 2, 19, 58, 46, 0, time.UTC))
 
 	// Assert
 	require.NotEmpty(t, res)

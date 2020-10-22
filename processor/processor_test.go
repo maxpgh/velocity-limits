@@ -58,17 +58,17 @@ func Test_Process_DepositMoreThan3TimesIn1Day_Denied(t *testing.T) {
 			{
 				ID:     "1",
 				Amount: 1000,
-				Time:   time.Date(2000, 0, 0, 0, 0, 0, 0, time.Now().UTC().Location()),
+				Time:   time.Date(2000, 0, 0, 0, 0, 0, 0, time.UTC),
 			},
 			{
 				ID:     "2",
 				Amount: 1000,
-				Time:   time.Date(2000, 0, 0, 0, 0, 0, 0, time.Now().UTC().Location()),
+				Time:   time.Date(2000, 0, 0, 0, 0, 0, 0, time.UTC),
 			},
 			{
 				ID:     "3",
 				Amount: 1000,
-				Time:   time.Date(2000, 0, 0, 0, 0, 0, 0, time.Now().UTC().Location()),
+				Time:   time.Date(2000, 0, 0, 0, 0, 0, 0, time.UTC),
 			},
 		},
 	}
@@ -106,7 +106,7 @@ func Test_Process_DepositMoreThanLimitPer1Day_Denied(t *testing.T) {
 			{
 				ID:     "1",
 				Amount: 400000,
-				Time:   time.Date(2000, 0, 0, 0, 0, 0, 0, time.Now().UTC().Location()),
+				Time:   time.Date(2000, 0, 0, 0, 0, 0, 0, time.UTC),
 			},
 		},
 	}
@@ -131,12 +131,12 @@ func Test_Process_DepositMoreThanLimitPer1Week_Denied(t *testing.T) {
 			{
 				ID:     "1",
 				Amount: 1500000,
-				Time:   time.Date(2000, 0, 0, 0, 0, 0, 0, time.Now().UTC().Location()),
+				Time:   time.Date(2000, 0, 0, 0, 0, 0, 0, time.UTC),
 			},
 			{
 				ID:     "2",
 				Amount: 400000,
-				Time:   time.Date(2000, 0, 3, 0, 0, 0, 0, time.Now().UTC().Location()),
+				Time:   time.Date(2000, 0, 3, 0, 0, 0, 0, time.UTC),
 			},
 		},
 	}
